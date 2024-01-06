@@ -91,7 +91,7 @@ DATABASES = {
         "NAME": "soundscapes",
         "USER" : 'farid',
         "PORT" : "5432",
-        "PASSWORD":"faridfarid82"
+        "PASSWORD":""
     }
 }
 
