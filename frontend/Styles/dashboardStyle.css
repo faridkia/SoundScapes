@@ -1,0 +1,19 @@
+body{
+    background-color: #1FB6FF;
+}
+.top img{
+    /* background-color: #9DC6E8; */
+    height: 30px;
+    width: 30px;
+}
+.top h3{
+    text-shadow: 2px 2px 4px #000000;
+}
+.main a{
+    height: 100px;
+    width: 300px;
+}
+.main span{
+    height: 80px;
+    width: 280px;
+}
