@@ -1,0 +1,53 @@
+{% extends 'parent/base.html' %}
+{% load static %}
+{% block title %}
+Login
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+    <script>
+        function showPassword() {
+            var passwordField = document.getElementById("password");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+    </script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="wrapper fadeInDown">
+        <h1>SoundScapes😉🎶</h1>
+        <br>
+      <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="active"> Log In </h2>
+        <h2 class="inactive underlineHover"><a href="{% url 'accounts:sign-up' %}"> Sign Up </a></h2>
+        <br>
+        <br>
+        <!-- Login Form -->
+        <form action="{% url 'accounts:login' %}" method="post">
+            {% csrf_token %}
+{#          <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username or Phone number">#}
+{#          <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">#}
+            {{ form.as_p }}
+          <br>
+
+          <input type="checkbox" onclick="showPassword()"> Show Password
+
+          <br>
+          <input type="submit" class="fadeIn fourth" value="Log In">
+        </form>
+
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+          <a class="underlineHover" href="{% url 'accounts:password-reset' %}">Forgot Password?</a>
+        </div>
+
+      </div>
+    </div>
+{% endblock %}

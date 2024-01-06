@@ -1,0 +1,15 @@
+{% extends 'parent/base.html' %}
+
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <h1>dadash {{ request.user.username }} ghamet nabashe login hasti</h1>
+        <a href="{% url 'accounts:logout' %}">logout</a>
+    {% else %}
+        <h2>dada doost dari login shi click kon pas</h2>
+        <a href="{% url 'accounts:login' %}">login</a>
+        <a href="{% url 'accounts:sign-up' %}">Sign Up</a>
+    {% endif %}
+{% endblock %}
