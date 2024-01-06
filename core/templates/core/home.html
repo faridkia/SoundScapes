@@ -1,15 +1,47 @@
-{% extends 'parent/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="Styles/homeStyle.css">
+</head>
+<body>
+    <div class="row ">
+        <div class="welcome d-flex justify-content-center text-white pt-5 ">
+            <h1>🎵 WELCOME TO SOUNDSCAPES 🎵</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 d-flex justify-content-end pt-5">
+            <a href="#" class="btn btn-secondary">LOG IN</a>
+        </div>
+        <div class="col-lg-6 pt-5">
+            <a href="#" class="btn btn-secondary ">SIGN UP</a>
+        </div>
+    </div>
+    <section class="about">
+        <div class=" row pt-4 ">
+            <div class="col-lg-5 d-flex justify-content-end ">
+                <h5>About us :</h5>
+            </div>
+            <div class="col-lg-4 ">
+                <p>Hello, this music platform is a group university project with the cooperation of Berdia Kaviani and Farid Kiaye. We hope you enjoy We would be happy if you follow us on GitHub</p>
+            </div>
+        </div>
+        <div class="row pb-4">
+            <div class="col-lg-6 d-flex justify-content-end">
+                <a href="https://github.com/faridkia" class="text-decoration-none text-black"><img src="images/25231.png" alt=""><span class="ps-1">faridkia</span></a>
+            </div>
+            <div class="col-lg-6">
+                <a href="https://github.com/BardiaKV" class="text-decoration-none text-black"><img src="images/25231.png" alt=""><span class="ps-1">BardiaKV</span></a>
 
+            </div>
 
-{% block title %}Home{% endblock %}
+        </div>
 
-{% block content %}
-    {% if request.user.is_authenticated %}
-        <h1>dadash {{ request.user.username }} ghamet nabashe login hasti</h1>
-        <a href="{% url 'accounts:logout' %}">logout</a>
-    {% else %}
-        <h2>dada doost dari login shi click kon pas</h2>
-        <a href="{% url 'accounts:login' %}">login</a>
-        <a href="{% url 'accounts:sign-up' %}">Sign Up</a>
-    {% endif %}
-{% endblock %}
+    </section>
+    
+</body>
+</html>
