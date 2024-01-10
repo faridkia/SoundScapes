@@ -6,7 +6,7 @@ SoundScapes is a django music platform app that delivers an immersive and person
 
 ## Table of Contents
 
-- [Installation](#installation-)
+- [Installation](#installation)
 - [Features](#features)
 - [Contributing](#contributing)
 - [Badges](#badges)
