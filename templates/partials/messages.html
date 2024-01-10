@@ -1,5 +1,18 @@
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var myAlert = document.getElementById('myAlert');
+
+            // Show the alert
+            myAlert.classList.remove('d-none');
+
+            // Set a timeout to hide the alert after 3000 milliseconds (3 seconds)
+            setTimeout(function () {
+                myAlert.classList.add('d-none');
+            }, 3000);
+        });
+    </script>
 {% if messages %}
     {% for msg in messages %}
-        <p class="alert alert-{{ msg.tags }}">{{ msg }}</p>
+            <p id="myAlert" style="width: 20%;position: fixed;bottom: 30px;left: 20px;z-index: 1000;" class="alert alert-{{ msg.tags }}">{{ msg }}</p>
     {% endfor %}
 {% endif %}

@@ -1,0 +1,90 @@
+{% extends 'parent/base.html' %}
+{% load static %}
+{% block title %}
+Users
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../../static/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="../../static/css/owl.carousel.min.css"/>
+	<link rel="stylesheet" href="../../static/css/slicknav.min.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+     <!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section clearfix">
+		<a href="{% url 'core:home' %}" class="site-logo">
+			<h2 style="color: #1FB6FF">SoundScapes</h2>
+		</a>
+		<div class="header-right">
+			<div class="user-panel">
+				<a href="{% url 'accounts:login' %}" class="login">DashBoard</a>
+				<a href="{% url 'core:songs' %}" class="login">Songs</a>
+				<a href="{% url 'core:playlists' %}" class="login">Playlists</a>
+				<a href="{% url 'core:artists' %}" class="login">Artists</a>
+                <a href="{% url 'core:profile' request.user.username %}" class="login">Profile</a>
+                <a href="{% url 'core:users' %}" class="login">Users</a>
+			</div>
+		</div>
+	</header>
+	<!-- Header section end -->
+    <!-- Songs section -->
+	<section class="playlist-section spad">
+		<div class="container-fluid">
+			<div class="section-title">
+				<h2 style="display: inline">Users</h2>
+
+			</div>
+			<div class="clearfix"></div>
+			<div class="row playlist-area">
+                {% for user in users %}
+                    <div class="mix col-lg-3 col-md-4 col-sm-6 genres">
+                        <div class="playlist-item">
+                            <img width="400px" height="220px" src="{{ user.photo.url }}" alt="{{ user.first_name }}">
+                            <a href="{% url 'core:profile' user.username %}"><h4>{{ user.username }}</h4></a>
+                        </div>
+				    </div>
+                {% endfor %}
+			</div>
+		</div>
+	</section>
+	<!-- Playlist section end -->
+
+	<!-- Help section end -->
+	<section class="help-section spad pt-0">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="section-title mb-0 pb-4">
+						<h2>Need Help to find user? </h2>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="d-flex h-100 align-items-end">
+						<form class="search-form" method="get">
+							<input name="search" type="text" placeholder="Hit it">
+							<button type="submit">Search</button>
+						</form>
+					</div>
+				</div>
+                {% include 'partials/pagination.html' with page=users %}
+			</div>
+		</div>
+	</section>
+	<!-- Help section end -->
+    <script src="../../static/js/jquery-3.2.1.min.js"></script>
+	<script src="../../static/js/bootstrap.min.js"></script>
+	<script src="../../static/js/jquery.slicknav.min.js"></script>
+	<script src="../../static/js/owl.carousel.min.js"></script>
+	<script src="../../static/js/mixitup.min.js"></script>
+	<script src="../../static/js/main.js"></script>
+{% endblock %}

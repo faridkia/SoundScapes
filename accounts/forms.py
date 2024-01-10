@@ -76,6 +76,10 @@ class SignUpForm(UserCreationForm):
         if len(cd['password1']) < 8 :
             raise forms.ValidationError('Password should be at least 8 characters long.')
         return cd['password2']
+    def validate_username(value):
+        if len(value) < 5:
+            raise ValidationError("Username must be at least 5 characters long.")
+
 
 class CustomPasswordResetForm(PasswordResetForm):
     email = forms.EmailField(max_length=254,label='', widget=forms.EmailInput(attrs={

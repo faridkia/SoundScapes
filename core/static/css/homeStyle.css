@@ -1,0 +1,15 @@
+body{
+    background-color: #1FB6FF;
+}
+.about{
+    background-color: #088CFA;
+    margin-top: 40px;
+}
+
+body img{
+    height: 30px;
+    width: 30px;
+}
+.welcome{
+    text-shadow: 2px 2px 4px #000000;
+}

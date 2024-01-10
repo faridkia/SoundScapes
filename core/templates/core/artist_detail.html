@@ -1,0 +1,125 @@
+{% extends 'parent/base.html' %}
+{% load static %}
+{% block title %}
+{{ artist.name }}
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../../static/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="../../static/css/owl.carousel.min.css"/>
+	<link rel="stylesheet" href="../../static/css/slicknav.min.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+    <!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+{% endblock %}
+
+{% block content %}
+    <!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section clearfix">
+		<a href="{% url 'core:home' %}" class="site-logo">
+			<h2 style="color: #1FB6FF">SoundScapes</h2>
+		</a>
+		<div class="header-right">
+			<div class="user-panel">
+				<a href="{% url 'accounts:login' %}" class="login">DashBoard</a>
+				<a href="{% url 'core:songs' %}" class="login">Songs</a>
+				<a href="{% url 'core:playlists' %}" class="login">Playlists</a>
+				<a href="{% url 'core:artists' %}" class="login">Artists</a>
+				<a href="{% url 'core:profile' request.user.username %}" class="login">Profile</a>
+                <a href="{% url 'core:users' %}" class="login">Users</a>
+			</div>
+		</div>
+	</header>
+	<!-- Header section end -->
+
+    <!-- Player section -->
+	<section class="player-section set-bg" data-setbg="../../static/img/player-bg.jpg">
+		<div class="player-box">
+			<div class="tarck-thumb-warp">
+				<div class="tarck-thumb">
+					<img style="width : 440px;height: 250px"  src="{{ artist.image.url }}" alt="{{ artist.name }}">
+				</div>
+			</div>
+			<div class="wave-player-warp">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="wave-player-info">
+							<h2>{{ artist.name }}</h2>
+							<p style="margin-left: 3px">{{ artist.songs.first.genre }} Singer / Songwriter</p>
+						</div>
+                        <h4>Music Counts : {{ artist.songs.count }}</h4>
+					</div>
+					<div class="col-lg-4">
+						<div class="songs-links">
+						</div>
+					</div>
+				</div>
+                <br>
+			</div>
+		</div>
+	</section>
+	<!-- Player section end -->
+
+	<!-- Songs details section -->
+	<section class="songs-details-section">
+		<div class="container-fluid">
+			<div class="row">
+				<div style="display: flex;align-items: center;justify-content: center;flex-direction: column" class="col-lg-12">
+					<div  class="song-details-box">
+						<h3>Songs Details</h3>
+					</div>
+                        <table class="table table-secondary table-borderless table-striped">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Song</th>
+                              <th>Genre</th>
+                              <th>Audio</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for song in artist.songs.all %}
+                            <tr>
+                              <th scope="row">{{ forloop.counter }}</th>
+                              <td><a href="{%url 'core:song-detail' song.slug%}">{{ song.name }}</a></td>
+                              <td>{{ song.genre }}</td>
+                              <td><audio style="width: 600px;height: 25px" controls>
+                          <source src="{{ song.audio.url }}" type="audio/ogg">
+                          <source src="{{ song.audio.url }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                        </audio></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                        </table>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Songs details section -->
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/mixitup.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+
+	<!-- Audio Players js -->
+	<script src="js/jquery.jplayer.min.js"></script>
+	<script src="js/wavesurfer.min.js"></script>
+
+	<!-- Audio Players Initialization -->
+	<script src="js/WaveSurferInit.js"></script>
+	<script src="js/jplayerInit.js"></script>
+{% endblock %}

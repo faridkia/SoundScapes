@@ -6,8 +6,11 @@ from django.dispatch import receiver
 
 class User(AbstractUser):
     date_of_birth = models.DateField(verbose_name='Birth date', blank=True, null=True)
-    photo = ResizedImageField(verbose_name='Image',upload_to="user-profiles", default='user.png')
+    photo = ResizedImageField(verbose_name='Image',upload_to="user-profiles", default='user-profiles/user.jpg')
     phone = models.CharField(max_length=11,verbose_name='Phone number',blank=True, null=True, unique=True)
+
+    def __str__(self):
+        return self.username
 
 @receiver(models.signals.pre_save, sender=User)
 def delete_file_on_change_photo(sender, instance, **kwargs):

@@ -1,53 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="Styles/dashboardStyle.css">
-</head>
-<body>
-    <div class="top row bg-primary">
-        <div class="col-lg-4 p-4">
-            <!-- <img src="images/user.png" alt=""><span class="ps-2 text-black fw-bold">Username</span> -->
-            <img src="images/user.png" alt="">
-            <span class="dropdown">
-                <button type="button" class="btn btn-primary text-black fw-bold dropdown-toggle" data-bs-toggle="dropdown">
-                    Username
-                  </button>
-                  <div class="dropdown-menu">
-                      <a class="dropdown-item " href="#">my information</a>
-                  </div>
-            </span>
+{% extends 'parent/base.html' %}
+{% load static %}
+{% block title %} Dashboard {% endblock title %}
+
+{% block head %}
+        <link href="{% static 'css/musicplayer.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.1.3/smooth-scroll.min.js" integrity="sha512-HYG9E+RmbXS7oy529Nk8byKFw5jqM3R1zzvoV2JnltsIGkK/AhZSzciYCNxDMOXEbYO9w6MJ6SpuYgm5PJPpeQ==" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div style="display: flex;justify-content: center;align-items: center;gap: 20px" class="container">
+            <h3 href="{% url 'core:dashboard' %}" style="color:#1FB6FF">Dashboard</h3>
+            <div class="collapse navbar-collapse">
+                <a href="{% url 'core:songs' %}" class="btn btn-outline-light mt-2 mx-1">ALL SONGS</a>
+                <a href="{% url 'core:profile' request.user.username %}" class="btn btn-outline-light mt-2 mx-1">PROFILE</a>
+                <a href="{% url 'core:users' %}" class="btn btn-outline-light mt-2 mx-1">USERS</a>
+                {% if request.user.is_active %}
+
+                <div class="btn-group mt-2 mx-1">
+                    <a type="button" href="{% url 'core:songs' %}" class="btn btn-outline-light">MORE</a>
+                    <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'core:favorites-songs' %}">Favorite Songs</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'core:favorites-playlists' %}">Favorite Playlists</a>
+                        </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbar">
+            {% if request.user.is_active %}
+            <h5 class="text-white mt-3 mx-2">Hi, {{ request.user.username }}</h5>
+            <a href="{% url 'accounts:logout' %}" class="btn btn-light mt-2 mx-2"> Sign Out <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+            {% else %}
+            <a href="{% url 'accounts:login' %}" class="btn btn-light mt-2 mx-2"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a>
+            <a href="{% url 'accounts:sign-up' %}" class="btn btn-light mt-2 mx-2"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</a>
+            {% endif %}
+            </div>
         </div>
-        <div class="col-lg-4 d-flex justify-content-center align-items-center text-white ">
-            <h3>🎵 SOUNDSCAPES 🎵</h3>
-        </div>
-        <div class="col-lg-4 d-flex justify-content-end p-4">
-             <a href="home.html"><img src="images/exit.png" alt="" ></a>
-        </div>
+
+    </nav>
+<br>
+<div class="container">
+
+<br>
+<br>
+
+
+<!-- All Songs -->
+  <header class="section-heading">
+{#      <a href="{% url 'core:songs' %}" class="btn btn-primary float-right">View all</a>#}
+    <h1 class="section-title">ALL SONGS</h1>
+  </header>
+<!-- Song list -->
+<div class="row">
+  {% if songs %}
+  {% for song in songs %}
+      <div class="col-xl-3 col-sm-6">
+					<div class="similar-song">
+						<img href="{% url 'core:song-detail' song.slug %}" style="width: 240px;height: 180px" class="ss-thumb" src="{{ song.image.url }}" alt="{{ song.name }}">
+						<h4><a style="color: #444;text-decoration: none" href="{% url 'core:song-detail' song.slug %}">{{  song.artist }}</a></h4>
+						<p>{{ song.name }}</p>
+					</div>
+				</div>
+      {% endfor %}
+  {% endif %}
+      <a href="{% url 'core:songs' %}" class="btn btn-dark float-right" style="height: 135px;"><center style="margin-top: 45px;">View all <i class="fa fa-arrow-right" aria-hidden="true"></i></center></a>
+</div>
+<br>
+<br><br>
+<br>
+
+
+<!-- Playlist Songs -->
+  <header style="left: 0" class="section-heading">
+    <h1 class="section-title">ALL PLAYLISTS</h1>
+  </header>
+<!-- Playlist -->
+<div class="row">
+  {% if playlists %}
+  {% for playlist in playlists %}
+      <div class="col-xl-3 col-sm-6">
+					<div class="similar-song">
+						<img href="{% url 'core:playlist-detail' playlist.slug %}" style="width: 240px;height: 180px" class="ss-thumb" src="{{ playlist.image.url }}" alt="{{ playlist.name }}">
+						<h4><a style="color: #333;text-decoration: none" href="{% url 'core:playlist-detail' playlist.slug %}">{{  playlist.title }}</a></h4>
+					</div>
+				</div>
+      {% endfor %}
+  {% endif %}
+    <a href="{% url 'core:playlists' %}" class="btn btn-dark float-right" style="height: 135px;"><center style="margin-top: 45px;">View all <i class="fa fa-arrow-right" aria-hidden="true"></i></center></a>
+
+</div>
+<br>
+<br><br><br>
+
+<!-- Artists -->
+  <header class="section-heading">
+    <h1 class="section-title">Artists</h1>
+  </header>
+<!-- Artist list -->
+<div class="row">
+  {% if artists %}
+  {% for artist in artists %}
+      <div class="col-xl-3 col-sm-6">
+					<div class="similar-song">
+						<img href="{% url 'core:artist-details' artist.slug %}" style="width: 240px;height: 180px" class="ss-thumb" src="{{ artist.image.url }}" alt="{{ artist.name }}">
+						<h4><a style="color: #333;text-decoration: none" href="{% url 'core:artist-details' artist.slug %}">{{  artist.name }}</a></h4>
+					</div>
+				</div>
+      {% endfor %}
+  {% endif %}
+      <a href="{% url 'core:artists' %}" class="btn btn-dark float-right" style="height: 135px;"><center style="margin-top: 45px;">View all <i class="fa fa-arrow-right" aria-hidden="true"></i></center></a>
     </div>
-    <section class="main p-5">
-        <div class="row">
-            <div class="col-lg-6 d-flex justify-content-end">
-                <a href="#" class="btn btn-primary "><span class="d-flex align-items-center justify-content-center">Songs</span></a>
-            </div>
-            <div class="col-lg-6">
-                <a href="#" class="btn btn-primary"><span class="d-flex align-items-center justify-content-center">Playlists</span></a>
-            </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-        </div>
-        <div class="row pt-3">
-            <div class="col-lg-6 d-flex justify-content-end">
-                <a href="#" class="btn btn-primary"><span class="d-flex align-items-center justify-content-center">Explore</span></a>
-            </div>
-            <div class="col-lg-6">
-                <a href="#" class="btn btn-primary"><span class="d-flex align-items-center justify-content-center">Recently Played</span></a>
-            </div>
-
-        </div>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}
