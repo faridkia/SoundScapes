@@ -1,5 +1,5 @@
 # SoundScapes 
-<hr>
+
 SoundScapes is a django music platform app that delivers an immersive and personalized audio experience to music enthusiasts worldwide. Whether you're a casual listener, a passionate music explorer, or an artist seeking a platform to showcase your talent, SoundScapes has something extraordinary to offer.
 
 
