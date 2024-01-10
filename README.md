@@ -56,6 +56,7 @@ If you want to contribute yo our project. follow instructions bellow :
 
 
 Thanks to this beautiful kind persons . we got some helps and ideas :
+
 1.https://github.com/manjurulhoque/django-music-streaming-app 
 
 2.https://github.com/varadbhogayata/music-player/tree/master
